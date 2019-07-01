@@ -218,6 +218,67 @@ SEXP wrap( const itk::Image<unsigned int,4>::Pointer &image )
 }
 
 
+
+
+template <> inline
+SEXP wrap( const itk::Image<unsigned short,2>::Pointer &image )
+{
+  typedef itk::Image<unsigned short,2>        ImageType;
+  typedef ImageType::Pointer ImagePointerType;
+
+  ImagePointerType* rawPointer = new ImagePointerType( image );
+  Rcpp::XPtr< ImagePointerType > xptr( rawPointer , true ) ;
+
+  Rcpp::S4 itkImage( std::string( "antsImage" ) );
+  itkImage.slot( "pixeltype" ) = "unsigned short";
+  itkImage.slot( "dimension" ) = 2;
+  itkImage.slot( "components" ) = 1;
+  itkImage.slot( "isVector" ) = false;
+  itkImage.slot( "pointer") = xptr;
+
+  return(wrap(itkImage));
+}
+
+template <> inline
+SEXP wrap( const itk::Image<unsigned short,3>::Pointer &image )
+{
+  typedef itk::Image<unsigned short,3>        ImageType;
+  typedef ImageType::Pointer ImagePointerType;
+
+  ImagePointerType* rawPointer = new ImagePointerType( image );
+  Rcpp::XPtr< ImagePointerType > xptr( rawPointer , true ) ;
+
+  Rcpp::S4 itkImage( std::string( "antsImage" ) );
+  itkImage.slot( "pixeltype" ) = "unsigned short";
+  itkImage.slot( "dimension" ) = 3;
+  itkImage.slot( "components" ) = 1;
+  itkImage.slot( "isVector" ) = false;
+  itkImage.slot( "pointer") = xptr;
+
+  return(wrap(itkImage));
+}
+
+template <> inline
+SEXP wrap( const itk::Image<unsigned short,4>::Pointer &image )
+{
+  typedef itk::Image<unsigned short,4>        ImageType;
+  typedef ImageType::Pointer ImagePointerType;
+
+  ImagePointerType* rawPointer = new ImagePointerType( image );
+  Rcpp::XPtr< ImagePointerType > xptr( rawPointer , true ) ;
+
+  Rcpp::S4 itkImage( std::string( "antsImage" ) );
+  itkImage.slot( "pixeltype" ) = "unsigned short";
+  itkImage.slot( "dimension" ) = 4;
+  itkImage.slot( "components" ) = 1;
+  itkImage.slot( "isVector" ) = false;
+  itkImage.slot( "pointer") = xptr;
+
+  return(wrap(itkImage));
+}
+
+
+
 template <> inline
 SEXP wrap( const itk::Image<unsigned char,2>::Pointer &image )
 {
@@ -325,6 +386,10 @@ itk::Image<double,2>::Pointer as( SEXP itkImageR )
     typedef itk::Image<unsigned int,Dim> PassedImageType;
     return castSEXP<PassedImageType,ImageType>( itkImageR );
   }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned short" ) {
+    typedef itk::Image<unsigned short,Dim> PassedImageType;
+    return castSEXP<PassedImageType,ImageType>( itkImageR );
+  }
   else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned char" ) {
     typedef itk::Image<unsigned char,Dim> PassedImageType;
     return castSEXP<PassedImageType,ImageType>( itkImageR );
@@ -364,6 +429,10 @@ itk::Image<double,3>::Pointer as( SEXP itkImageR )
     typedef itk::Image<unsigned int,Dim> PassedImageType;
     return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
   }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned short" ) {
+    typedef itk::Image<unsigned short,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
   else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned char" ) {
     typedef itk::Image<unsigned char,Dim> PassedImageType;
     return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
@@ -398,6 +467,10 @@ itk::Image<double,4>::Pointer as( SEXP itkImageR )
   }
   else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned int" ) {
     typedef itk::Image<unsigned int,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned short" ) {
+    typedef itk::Image<unsigned short,Dim> PassedImageType;
     return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
   }
   else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned char" ) {
@@ -437,6 +510,10 @@ itk::Image<float,2>::Pointer as( SEXP itkImageR )
     typedef itk::Image<unsigned int,Dim> PassedImageType;
     return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
   }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned short" ) {
+    typedef itk::Image<unsigned short,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
   else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned char" ) {
     typedef itk::Image<unsigned char,Dim> PassedImageType;
     return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
@@ -473,6 +550,10 @@ itk::Image<float,3>::Pointer as( SEXP itkImageR )
     typedef itk::Image<unsigned int,Dim> PassedImageType;
     return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
   }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned short" ) {
+    typedef itk::Image<unsigned short,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
   else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned char" ) {
     typedef itk::Image<unsigned char,Dim> PassedImageType;
     return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
@@ -507,6 +588,10 @@ itk::Image<float,4>::Pointer as( SEXP itkImageR )
   }
   else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned int" ) {
     typedef itk::Image<unsigned int,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned short" ) {
+    typedef itk::Image<unsigned short,Dim> PassedImageType;
     return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
   }
   else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned char" ) {
@@ -627,6 +712,117 @@ itk::Image<unsigned int,4>::Pointer as( SEXP itkImageR )
     Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) << std::endl;
   return nullptr;
 }
+
+
+template <> inline
+itk::Image<unsigned short,2>::Pointer as( SEXP itkImageR )
+{
+  const unsigned int Dim = 2;
+  typedef itk::Image<unsigned short,Dim>        ImageType;
+  Rcpp::S4 itkImageObject( itkImageR );
+
+  if (!itkImageObject.is( "antsImage") ||
+      (Rcpp::as<int>(itkImageObject.slot("dimension")) != Dim) ||
+      (Rcpp::as<int>(itkImageObject.slot("components")) != 1) )
+    {
+    Rcpp::stop( "Invalid S4 object type in itk::Image<unsigned short,2>::Pointer Rcpp::as()");
+    }
+
+  if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned short" ) {
+    return( castSEXP<ImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "double" ) {
+    typedef itk::Image<double,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "float" ) {
+    typedef itk::Image<float,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned ing" ) {
+    typedef itk::Image<unsigned int,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+
+  // never reached
+  Rcpp::Rcout << "Unsupported pixeltype: " <<
+    Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) << std::endl;
+  return nullptr;
+}
+
+template <> inline
+itk::Image<unsigned short,3>::Pointer as( SEXP itkImageR )
+{
+  const unsigned int Dim = 3;
+  typedef itk::Image<unsigned short,Dim>        ImageType;
+  Rcpp::S4 itkImageObject( itkImageR );
+
+  if (!itkImageObject.is( "antsImage") ||
+      (Rcpp::as<int>(itkImageObject.slot("dimension")) != Dim) ||
+      (Rcpp::as<int>(itkImageObject.slot("components")) != 1) )
+    {
+    Rcpp::stop( "Invalid S4 object type in itk::Image<unsigned short,3>::Pointer Rcpp::as()");
+    }
+
+  if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned short" ) {
+    return( castSEXP<ImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "double" ) {
+    typedef itk::Image<double,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "float" ) {
+    typedef itk::Image<float,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned ing" ) {
+    typedef itk::Image<unsigned int,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+
+  // never reached
+  Rcpp::Rcout << "Unsupported pixeltype: " <<
+    Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) << std::endl;
+  return nullptr;
+}
+
+template <> inline
+itk::Image<unsigned short,4>::Pointer as( SEXP itkImageR )
+{
+  const unsigned int Dim = 4;
+  typedef itk::Image<unsigned short,Dim>        ImageType;
+
+  Rcpp::S4 itkImageObject( itkImageR );
+
+  if (!itkImageObject.is( "antsImage") ||
+      (Rcpp::as<int>(itkImageObject.slot("dimension")) != Dim) ||
+      (Rcpp::as<int>(itkImageObject.slot("components")) != 1) )
+    {
+    Rcpp::stop( "Invalid S4 object type in itk::Image<unsigned short,4>::Pointer Rcpp::as()");
+    }
+
+  if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned char" ) {
+    return( castSEXP<ImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "double" ) {
+    typedef itk::Image<double,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "float" ) {
+    typedef itk::Image<float,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+  else if ( Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) == "unsigned ing" ) {
+    typedef itk::Image<unsigned int,Dim> PassedImageType;
+    return( castSEXP<PassedImageType,ImageType>( itkImageR ) );
+  }
+
+  // never reached
+  Rcpp::Rcout << "Unsupported pixeltype: " <<
+    Rcpp::as<std::string>(itkImageObject.slot("pixeltype")) << std::endl;
+  return nullptr;
+}
+
 
 template <> inline
 itk::Image<unsigned char,2>::Pointer as( SEXP itkImageR )

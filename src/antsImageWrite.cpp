@@ -96,7 +96,8 @@ try
   if ( (pixeltype != "double") &&
        (pixeltype != "float") &&
        (pixeltype != "unsigned int") &&
-       (pixeltype != "unsigned char") )
+       (pixeltype != "unsigned char") &&
+       (pixeltype != "unsigned short") )
     {
     Rcpp::stop( "Unsupported pixeltype");
     }
@@ -231,6 +232,50 @@ try
         ants::antsImageWrite< VectorImageType >( r_img, filename, asTensor );
 
       if ( verbose ) Rcpp::Rcout << "Done writing image. PixelType: 'double' | Dimension: '4'." << std::endl ;
+      return Rcpp::wrap( 0 ) ;
+      }
+    }
+  else if ( pixeltype == "unsigned short" )
+    {
+    typedef unsigned short PixelType;
+    if( dimension == 4 )
+      {
+      const int ImageDimension = 4;
+      typedef itk::Image< PixelType , ImageDimension >      ImageType;
+//      typedef itk::VectorImage< PixelType, ImageDimension > VectorImageType;
+
+      if (components == 1)
+        ants::antsImageWrite< ImageType >( r_img, filename, asTensor );
+      else Rcpp::Rcout << "Not supported" << std::endl;
+        //ants::antsImageWrite< VectorImageType >( r_img, filename, asTensor );
+
+      if ( verbose ) Rcpp::Rcout << "Done writing image. PixelType: 'unsigned short' | Dimension: '4'." << std::endl ;
+      return Rcpp::wrap( 0 );
+      }
+    else if( dimension == 3 )
+      {
+      const int ImageDimension = 3 ;
+      typedef itk::Image< PixelType , ImageDimension >      ImageType;
+//      typedef itk::VectorImage< PixelType, ImageDimension > VectorImageType;
+
+      if (components == 1)
+        ants::antsImageWrite< ImageType >( r_img, filename, asTensor );
+      else Rcpp::Rcout << "Not supported" << std::endl;
+
+      if ( verbose ) Rcpp::Rcout << "Done writing image. PixelType: 'unsigned short' | Dimension: '4'." << std::endl ;
+      return Rcpp::wrap( 0 ) ;
+      }
+    else if( dimension == 2 )
+      {
+      const int ImageDimension = 2 ;
+      typedef itk::Image< PixelType , ImageDimension >      ImageType;
+//      typedef itk::VectorImage< PixelType, ImageDimension > VectorImageType;
+
+      if (components == 1)
+        ants::antsImageWrite< ImageType >( r_img, filename, asTensor );
+      else Rcpp::Rcout << "Not supported" << std::endl;
+
+      if ( verbose ) Rcpp::Rcout << "Done writing image. PixelType: 'unsigned short' | Dimension: '4'." << std::endl ;
       return Rcpp::wrap( 0 ) ;
       }
     }

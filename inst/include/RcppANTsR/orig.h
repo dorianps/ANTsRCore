@@ -97,6 +97,12 @@ template <> inline SEXP wrap( const itk::VectorImage<unsigned int,2>::Pointer &i
 template <> inline SEXP wrap( const itk::VectorImage<unsigned int,3>::Pointer &image );
 template <> inline SEXP wrap( const itk::VectorImage<unsigned int,4>::Pointer &image );
 
+
+template <> inline SEXP wrap( const itk::VectorImage<unsigned short,2>::Pointer &image );
+template <> inline SEXP wrap( const itk::VectorImage<unsigned short,3>::Pointer &image );
+template <> inline SEXP wrap( const itk::VectorImage<unsigned short,4>::Pointer &image );
+
+
 template <> inline SEXP wrap( const itk::VectorImage<unsigned char,2>::Pointer &image );
 template <> inline SEXP wrap( const itk::VectorImage<unsigned char,3>::Pointer &image );
 template <> inline SEXP wrap( const itk::VectorImage<unsigned char,4>::Pointer &image );
@@ -109,6 +115,10 @@ template <> inline itk::VectorImage<double,4>::Pointer as( SEXP itkImageR );
 template <> inline itk::VectorImage<float,2>::Pointer as( SEXP itkImageR );
 template <> inline itk::VectorImage<float,3>::Pointer as( SEXP itkImageR );
 template <> inline itk::VectorImage<float,4>::Pointer as( SEXP itkImageR );
+
+template <> inline itk::VectorImage<unsigned short,2>::Pointer as( SEXP itkImageR );
+template <> inline itk::VectorImage<unsigned short,3>::Pointer as( SEXP itkImageR );
+template <> inline itk::VectorImage<unsigned short,4>::Pointer as( SEXP itkImageR );
 
 template <> inline itk::VectorImage<unsigned char,2>::Pointer as( SEXP itkImageR );
 template <> inline itk::VectorImage<unsigned char,3>::Pointer as( SEXP itkImageR );
@@ -131,6 +141,10 @@ template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Imag
 template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Image<unsigned int,3> > & iterator );
 template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Image<unsigned int,4> > & iterator );
 
+template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Image<unsigned short,2> > & iterator );
+template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Image<unsigned short,3> > & iterator );
+template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Image<unsigned short,4> > & iterator );
+
 template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Image<unsigned char,2> > & iterator );
 template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Image<unsigned char,3> > & iterator );
 template <> inline SEXP wrap( const itk::ImageRegionIteratorWithIndex< itk::Image<unsigned char,4> > & iterator );
@@ -147,6 +161,10 @@ template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<float,4> > as( 
 template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<unsigned int,2> > as( SEXP itkImageIteratorR );
 template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<unsigned int,3> > as( SEXP itkImageIteratorR );
 template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<unsigned int,4> > as( SEXP itkImageIteratorR );
+
+template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<unsigned short,2> > as( SEXP itkImageIteratorR );
+template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<unsigned short,3> > as( SEXP itkImageIteratorR );
+template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<unsigned short,4> > as( SEXP itkImageIteratorR );
 
 template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<unsigned char,2> > as( SEXP itkImageIteratorR );
 template <> inline itk::ImageRegionIteratorWithIndex< itk::Image<unsigned char,3> > as( SEXP itkImageIteratorR );
@@ -864,6 +882,61 @@ SEXP wrap( const itk::VectorImage<unsigned int,4>::Pointer &image )
 
   return(wrap(itkImage));
 }
+
+template <> inline
+SEXP wrap( const itk::VectorImage<unsigned short,2>::Pointer &image )
+{
+  typedef itk::VectorImage<unsigned short,2>  ImageType;
+  typedef ImageType::Pointer ImagePointerType;
+
+  ImagePointerType* rawPointer = new ImagePointerType( image );
+  Rcpp::XPtr< ImagePointerType > xptr( rawPointer , true ) ;
+
+  Rcpp::S4 itkImage( std::string( "antsImage" ) );
+  itkImage.slot( "pixeltype" ) = "unsigned short";
+  itkImage.slot( "dimension" ) = 2;
+  itkImage.slot( "components" ) = image->GetNumberOfComponentsPerPixel();
+  itkImage.slot( "pointer") = xptr;
+
+  return(wrap(itkImage));
+}
+
+template <> inline
+SEXP wrap( const itk::VectorImage<unsigned short,3>::Pointer &image )
+{
+  typedef itk::VectorImage<unsigned short,3>        ImageType;
+  typedef ImageType::Pointer ImagePointerType;
+
+  ImagePointerType* rawPointer = new ImagePointerType( image );
+  Rcpp::XPtr< ImagePointerType > xptr( rawPointer , true ) ;
+
+  Rcpp::S4 itkImage( std::string( "antsImage" ) );
+  itkImage.slot( "pixeltype" ) = "unsigned short";
+  itkImage.slot( "dimension" ) = 3;
+  itkImage.slot( "components" ) = image->GetNumberOfComponentsPerPixel();
+  itkImage.slot( "pointer") = xptr;
+
+  return(wrap(itkImage));
+}
+
+template <> inline
+SEXP wrap( const itk::VectorImage<unsigned short,4>::Pointer &image )
+{
+  typedef itk::VectorImage<unsigned short,4>        ImageType;
+  typedef ImageType::Pointer ImagePointerType;
+
+  ImagePointerType* rawPointer = new ImagePointerType( image );
+  Rcpp::XPtr< ImagePointerType > xptr( rawPointer , true ) ;
+
+  Rcpp::S4 itkImage( std::string( "antsImage" ) );
+  itkImage.slot( "pixeltype" ) = "unsigned short";
+  itkImage.slot( "dimension" ) = 4;
+  itkImage.slot( "components" ) = image->GetNumberOfComponentsPerPixel();
+  itkImage.slot( "pointer") = xptr;
+
+  return(wrap(itkImage));
+}
+
 
 template <> inline
 SEXP wrap( const itk::VectorImage<unsigned char,2>::Pointer &image )

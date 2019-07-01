@@ -20,6 +20,10 @@ template <> inline SEXP wrap( const itk::Image<unsigned int,2>::Pointer &image )
 template <> inline SEXP wrap( const itk::Image<unsigned int,3>::Pointer &image );
 template <> inline SEXP wrap( const itk::Image<unsigned int,4>::Pointer &image );
 
+template <> inline SEXP wrap( const itk::Image<unsigned short,2>::Pointer &image );
+template <> inline SEXP wrap( const itk::Image<unsigned short,3>::Pointer &image );
+template <> inline SEXP wrap( const itk::Image<unsigned short,4>::Pointer &image );
+
 template <> inline SEXP wrap( const itk::Image<unsigned char,2>::Pointer &image );
 template <> inline SEXP wrap( const itk::Image<unsigned char,3>::Pointer &image );
 template <> inline SEXP wrap( const itk::Image<unsigned char,4>::Pointer &image );
@@ -36,6 +40,11 @@ template <> inline itk::Image<float,4>::Pointer as( SEXP itkImageR );
 template <> inline itk::Image<unsigned int,2>::Pointer as( SEXP itkImageR );
 template <> inline itk::Image<unsigned int,3>::Pointer as( SEXP itkImageR );
 template <> inline itk::Image<unsigned int,4>::Pointer as( SEXP itkImageR );
+
+template <> inline itk::Image<unsigned short,2>::Pointer as( SEXP itkImageR );
+template <> inline itk::Image<unsigned short,3>::Pointer as( SEXP itkImageR );
+template <> inline itk::Image<unsigned short,4>::Pointer as( SEXP itkImageR );
+
 
 template <> inline itk::Image<unsigned char,2>::Pointer as( SEXP itkImageR );
 template <> inline itk::Image<unsigned char,3>::Pointer as( SEXP itkImageR );

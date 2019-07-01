@@ -405,6 +405,57 @@ RcppExport SEXP antsImageClone( SEXP r_in_image , SEXP r_out_pixeltype )
       out_image.slot( "pointer" ) = out_image_xptr ;
       out_image.slot( "components" ) = (*out_image_ptr_ptr)->GetNumberOfComponentsPerPixel();
     }
+  else if( in_pixeltype == std::string( "float" ) && dimension == 4 && out_pixeltype == std::string( "unsigned short" ) )
+    {
+      const int ImageDimension = 4 ;
+      typedef float InPixelType ;
+      typedef itk::Image< InPixelType , ImageDimension > InImageType ;
+      typedef InImageType::Pointer InImagePointerType ;
+
+      typedef unsigned short OutPixelType ;
+      typedef itk::Image< OutPixelType , ImageDimension > OutImageType ;
+      typedef OutImageType::Pointer OutImagePointerType ;
+
+      Rcpp::XPtr< InImagePointerType > in_image_xptr( static_cast< SEXP >( in_image.slot( "pointer" ) ) ) ;
+      OutImagePointerType* out_image_ptr_ptr = new OutImagePointerType( ants::antsImageClone< InImageType , OutImageType >( *in_image_xptr ) ) ;
+      Rcpp::XPtr< OutImagePointerType > out_image_xptr( out_image_ptr_ptr , true ) ;
+      out_image.slot( "pointer" ) = out_image_xptr ;
+      out_image.slot( "components" ) = (*out_image_ptr_ptr)->GetNumberOfComponentsPerPixel();
+    }
+  else if( in_pixeltype == std::string( "float" ) && dimension == 3 && out_pixeltype == std::string( "unsigned short" ) )
+    {
+      const int ImageDimension = 3 ;
+      typedef float InPixelType ;
+      typedef itk::Image< InPixelType , ImageDimension > InImageType ;
+      typedef InImageType::Pointer InImagePointerType ;
+
+      typedef unsigned short OutPixelType ;
+      typedef itk::Image< OutPixelType , ImageDimension > OutImageType ;
+      typedef OutImageType::Pointer OutImagePointerType ;
+
+      Rcpp::XPtr< InImagePointerType > in_image_xptr( static_cast< SEXP >( in_image.slot( "pointer" ) ) ) ;
+      OutImagePointerType* out_image_ptr_ptr = new OutImagePointerType( ants::antsImageClone< InImageType , OutImageType >( *in_image_xptr ) ) ;
+      Rcpp::XPtr< OutImagePointerType > out_image_xptr( out_image_ptr_ptr , true ) ;
+      out_image.slot( "pointer" ) = out_image_xptr ;
+      out_image.slot( "components" ) = (*out_image_ptr_ptr)->GetNumberOfComponentsPerPixel();
+    }
+  else if( in_pixeltype == std::string( "float" ) && dimension == 2 && out_pixeltype == std::string( "unsigned short" ) )
+    {
+      const int ImageDimension = 2 ;
+      typedef float InPixelType ;
+      typedef itk::Image< InPixelType , ImageDimension > InImageType ;
+      typedef InImageType::Pointer InImagePointerType ;
+
+      typedef unsigned short OutPixelType ;
+      typedef itk::Image< OutPixelType , ImageDimension > OutImageType ;
+      typedef OutImageType::Pointer OutImagePointerType ;
+
+      Rcpp::XPtr< InImagePointerType > in_image_xptr( static_cast< SEXP >( in_image.slot( "pointer" ) ) ) ;
+      OutImagePointerType* out_image_ptr_ptr = new OutImagePointerType( ants::antsImageClone< InImageType , OutImageType >( *in_image_xptr ) ) ;
+      Rcpp::XPtr< OutImagePointerType > out_image_xptr( out_image_ptr_ptr , true ) ;
+      out_image.slot( "pointer" ) = out_image_xptr ;
+      out_image.slot( "components" ) = (*out_image_ptr_ptr)->GetNumberOfComponentsPerPixel();
+    }
   else if( in_pixeltype == std::string( "float" ) && dimension == 4 && out_pixeltype == std::string( "unsigned char" ) )
     {
       const int ImageDimension = 4 ;

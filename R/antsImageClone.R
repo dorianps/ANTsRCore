@@ -7,7 +7,7 @@
 #' @param in_image image object of S4 class \code{antsImage} to be cloned.
 #' @param out_pixeltype C++ datatype to be used to represent the pixels in the
 #' output image. Allowed values: \code{double}, \code{float},
-#' \code{unsigned int}, \code{unsigned char}.
+#' \code{unsigned int}, \code{unsigned char},  \code{unsigned short} if input is \code{float}.
 #' @return object of class \code{antsImage}
 #' @author Shrinidhi KL
 #' @examples
@@ -27,8 +27,8 @@ antsImageClone <- function(in_image, out_pixeltype = in_image@pixeltype) {
   if (length(dim(in_image)) == 1)
     if (dim(in_image)[1] == 1)
       return(NULL)
-  
-  if (in_image@components > 1) 
+
+  if (in_image@components > 1)
   {
     mychanns <- splitChannels( in_image )
     for ( k in 1:length(mychanns) )
@@ -38,6 +38,6 @@ antsImageClone <- function(in_image, out_pixeltype = in_image@pixeltype) {
     }
     return( mergeChannels( mychanns ) )
   }
-  
+
   .Call("antsImageClone", in_image, out_pixeltype, PACKAGE = "ANTsRCore")
 }

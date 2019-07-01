@@ -148,6 +148,37 @@ try
         antsImage<VectorImageType>( pixeltype, components );
 	    }
     }
+  else if( pixeltype == "unsigned short" )
+    {
+    typedef unsigned short ValueType;
+    if( dimension == 4 )
+      {
+      typedef itk::Image<ValueType,4>       ImageType;
+      typedef itk::VectorImage<ValueType,4> VectorImageType;
+
+      return (components==1) ?
+        antsImage<ImageType>( pixeltype, components ) :
+        antsImage<VectorImageType>( pixeltype, components );
+      }
+    else if( dimension == 3 )
+      {
+      typedef itk::Image<ValueType,3>       ImageType;
+      typedef itk::VectorImage<ValueType,3> VectorImageType;
+
+      return (components==1) ?
+        antsImage<ImageType>( pixeltype, components ) :
+        antsImage<VectorImageType>( pixeltype, components );
+      }
+    else if( dimension == 2 )
+      {
+      typedef itk::Image<ValueType,2>       ImageType;
+      typedef itk::VectorImage<ValueType,2> VectorImageType;
+
+      return (components==1) ?
+        antsImage<ImageType>( pixeltype, components ) :
+        antsImage<VectorImageType>( pixeltype, components );
+      }
+    }
   else if( pixeltype == "unsigned char" )
     {
     typedef unsigned char ValueType;
